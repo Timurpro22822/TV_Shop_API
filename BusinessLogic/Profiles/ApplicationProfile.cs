@@ -19,7 +19,12 @@ namespace BusinessLogic.Profiles
             
             CreateMap<TVDto, TV>()
                     .ForMember(d => d.ColorId, opt => opt.MapFrom(c => c.ColId));
-                    
+
+            CreateMap<UserDto, IdentityUser>()
+                    .ForMember(d => d.UserName, opt => opt.MapFrom(c => c.Email))
+                    .ForMember(d => d.PasswordHash, opt => opt.Ignore())
+                    .ForMember(d => d.Id, opt => opt.Ignore());
+
         }
     }
 }

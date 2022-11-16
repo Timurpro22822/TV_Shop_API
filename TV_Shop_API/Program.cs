@@ -3,6 +3,7 @@ using BusinessLogic.Services;
 using Data.Data;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,8 +16,14 @@ builder.Services.AddControllers();
 
 builder.Services.AddDbContext<TVShopDbContext>(options => options.UseSqlServer(connectionStr));
 
+// add Identity
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<TVShopDbContext>()
+    .AddDefaultTokenProviders();
+
 // add custom services
 builder.Services.AddScoped<ITVService, TVService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 // add AutoMapper service
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
